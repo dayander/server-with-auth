@@ -12,8 +12,16 @@ function tokenForUser(user) {
 }
 
 
+exports.login = function(req, res, done){
+    res.send({token: tokenForUser(req.user)});
+};
 
-function userHandlerPost(req, res, next) {
+
+
+
+
+
+exports.signup = function(req, res, next) {
     var {fistName, lastName, email, password} = req.body;
 
     //check to see if user exists
@@ -50,9 +58,8 @@ function userHandlerPost(req, res, next) {
     //return res.send(user)
 
 
-}
+};
 
 
-module.exports = userHandlerPost;
 
 
