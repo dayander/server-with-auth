@@ -5,10 +5,19 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const router = require('./router');
+const cors = require('cors');
+
 
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());
+
+
+
+const corsOptions = {
+    origin: "http://localhost:3000"
+};
+app.use(cors(corsOptions));
 
 
 

@@ -13,7 +13,7 @@ function tokenForUser(user) {
 
 
 exports.login = function(req, res, done){
-    res.send({token: tokenForUser(req.user)});
+    res.send({token: tokenForUser(req.user), userID:req.user._id });
 };
 
 
@@ -24,13 +24,20 @@ exports.login = function(req, res, done){
 exports.signup = function(req, res, next) {
     var {fistName, lastName, email, password} = req.body;
 
+    console.log(req.body);
+
+
+
+
+
     //check to see if user exists
 
     Users.findOne({email: email}, function (err, existingUser) {
 
 
         if(existingUser){
-            return res.status(422).send("Email already in use")
+            console.log("user in user");
+            return res.status(422).send({error:"Email already in use"})
         }
 
         const user = new Users({
@@ -38,13 +45,13 @@ exports.signup = function(req, res, next) {
             lastName: lastName,
             email: email,
             password: password
-        })
+        });
 
         user.save(user, function(err, user){
             if(err){
                 throw err;
             }
-            return res.json({token: tokenForUser(user)});
+            return res.json({token: tokenForUser(user), userID: user._id});
         })
 
 
