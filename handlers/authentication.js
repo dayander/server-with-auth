@@ -13,7 +13,10 @@ function tokenForUser(user) {
 
 
 exports.login = function(req, res, done){
-    res.send({token: tokenForUser(req.user), userID:req.user._id });
+    const fullName = req.user.firstName +" "+ req.user.lastName;
+
+
+    res.send({token: tokenForUser(req.user), userID:req.user._id, userName: fullName });
 };
 
 
@@ -22,9 +25,12 @@ exports.login = function(req, res, done){
 
 
 exports.signup = function(req, res, next) {
-    var {fistName, lastName, email, password} = req.body;
 
-    console.log(req.body);
+    var {firstName, lastName, email, password} = req.body;
+
+    console.log(firstName);
+
+
 
 
 
@@ -41,17 +47,19 @@ exports.signup = function(req, res, next) {
         }
 
         const user = new Users({
-            firstName: fistName,
-            lastName: lastName,
             email: email,
-            password: password
+            password: password,
+            lastName: lastName,
+            firstName: firstName,
         });
 
         user.save(user, function(err, user){
             if(err){
                 throw err;
             }
-            return res.json({token: tokenForUser(user), userID: user._id});
+            const fullName = req.user.firstName +" "+ req.user.lastName;
+
+            return res.json({token: tokenForUser(user), userID:user._id, userName: fullName });
         })
 
 
