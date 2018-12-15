@@ -22,6 +22,28 @@ exports.getProjects = function(req, res, done){
 };
 
 
+exports.getSingleProject = function(req, res, done){
+
+    const {userID, projectID} = req.params;
+
+
+
+
+
+    Project.findOne({userID: userID, _id: projectID},function (err, project) {
+        if (err){
+            throw err;
+        }
+
+        console.log(project)
+
+        res.json(project);
+
+    });
+
+};
+
+
 
 exports.postProject = function (req,res,done) {
 
@@ -48,5 +70,29 @@ exports.postProject = function (req,res,done) {
         res.json({project: project})
 
     })
+
+};
+
+
+
+exports.putProjectName = function (req,res,done) {
+
+
+    const {userID, projectID} = req.params;
+
+    console.log(req.body)
+
+
+
+    Project.findOneAndUpdate({userID: userID, _id: projectID}, {...req.body},function (err, project) {
+        if (err){
+            throw err;
+        }
+
+        console.log(project)
+
+        res.json(project);
+
+    });
 
 }

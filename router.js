@@ -17,6 +17,11 @@ module.exports = function (app) {
 
   app.get('/dashboard', requireSignin, );
     app.get('/projects/:userID',  ideas.getProjects );
+
+    app.get('/projects/:userID/:projectID', ideas.getSingleProject);
+    app.put('/projects/:userID/:projectID', ideas.putProjectName);
+
+
     app.post('/projects', requireAuth, ideas.postProject );
 
 
