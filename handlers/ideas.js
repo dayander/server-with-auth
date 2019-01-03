@@ -3,6 +3,8 @@ const db = require('../dbConnection');
 const jwt = require('jwt-simple');
 const config = require('../config');
 
+
+
 const Project = require('../models/Project');
 
 exports.getProjects = function(req, res, done){
@@ -96,3 +98,83 @@ exports.putProjectName = function (req,res,done) {
     });
 
 }
+
+
+exports.putIdea = function (req,res,done) {
+
+
+    const {userID, projectID} = req.params;
+
+    const idea = req.body.idea;
+
+    console.log(idea)
+
+
+
+    Project.findOneAndUpdate({userID: userID, _id: projectID}, {$push:{ideas:{ideaString:req.body.idea, priority: req.body.priority, dateCreated: req.body.dateCreated  }}}, {new:true},function (err, project) {
+        if (err){
+            throw err;
+        }
+
+        console.log(project)
+
+        res.json(project);
+
+    });
+
+}
+
+
+exports.deleteIdea = function (req,res,done) {
+
+
+    const {userID, projectID} = req.params;
+
+    const {deleteIdea} = req.body;
+
+    console.log(deleteIdea)
+    console.log(req.body)
+
+
+
+        Project.findOneAndUpdate({userID: userID, _id: projectID}, {$pull:{ideas:req.body}}, {new: true},function (err, project) {
+            if (err){
+                throw err;
+            }
+
+            console.log(project.ideas);
+
+
+
+            res.json(project);
+
+        });
+
+
+};
+
+
+exports.updatePriority = function (req,res,done) {
+
+
+    const {userID, projectID} = req.params;
+
+    const ideaToUpdate = req.body;
+
+
+
+    Project.updateOne({userID: userID, _id: projectID, "ideas.ideaString":ideaToUpdate.ideaString }, {$set:{"ideas.$.priority": ideaToUpdate.priority }}, {new: true},function (err, project) {
+        if (err){
+            throw err;
+        }
+
+        console.log('project', project);
+
+
+
+        res.json(project);
+
+    });
+
+
+};

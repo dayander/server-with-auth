@@ -4,8 +4,9 @@ let mongoose = require('mongoose');
 
 let ideaSchema = mongoose.Schema({
     ideaString: String,
-    priority: {type:String, enum: ['Top','Middle', 'low']},
+    priority: Int32,
     userID: String,
+    dateCreated: Date,
 
 
 

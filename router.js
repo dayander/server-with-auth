@@ -21,6 +21,10 @@ module.exports = function (app) {
     app.get('/projects/:userID/:projectID', ideas.getSingleProject);
     app.put('/projects/:userID/:projectID', ideas.putProjectName);
 
+    app.put('/ideas/:userID/:projectID', ideas.putIdea);
+    app.patch('/ideas/:userID/:projectID', ideas.deleteIdea);
+    app.patch('/idea-priority/:userID/:projectID', ideas.updatePriority);
+
 
     app.post('/projects', requireAuth, ideas.postProject );
 
