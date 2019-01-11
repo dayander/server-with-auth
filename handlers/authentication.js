@@ -56,8 +56,11 @@ exports.signup = function(req, res, next) {
         user.save(user, function(err, user){
             if(err){
                 throw err;
+
             }
-            const fullName = req.user.firstName +" "+ req.user.lastName;
+
+            console.log(user);
+            const fullName = user.firstName +" "+ user.lastName;
 
             return res.json({token: tokenForUser(user), userID:user._id, userName: fullName });
         })

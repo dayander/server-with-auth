@@ -7,6 +7,11 @@ let projctSchema = mongoose.Schema({
      topIdeas: [],
     dateCreated: Date,
      userID: String,
+    child: Object,
+    isNested: Boolean,
+    parentID: String,
+    biWord: Object,
+
 
 });
 

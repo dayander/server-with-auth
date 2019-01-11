@@ -7,6 +7,7 @@ let ideaSchema = mongoose.Schema({
     priority: Int32,
     userID: String,
     dateCreated: Date,
+    children: [],
 
 
 

@@ -7,6 +7,45 @@ const config = require('../config');
 
 const Project = require('../models/Project');
 
+
+
+exports.createNewProject = function(req,res,done){
+
+    let project = new Project;
+    const userID = req.params.userID;
+
+    project.userID = userID;
+    project.dateCreated = new Date();
+
+    Project.create(project, function (err, project) {
+
+        console.log(project);
+
+        res.json(project);
+    })
+
+
+};
+
+
+
+
+exports.deleteProject = function(req,res,done){
+    const {userID, projectID} = req.params;
+
+
+  Project.deleteOne({userID:userID, _id:projectID}, function (projects, err) {
+
+      console.log(projects)
+
+      res.json(projectID)
+
+  })
+
+
+
+};
+
 exports.getProjects = function(req, res, done){
     console.log(req.params.userID)
     const userID = req.params.userID;
