@@ -3,13 +3,13 @@ let mongoose = require('mongoose');
 
 
 let biWordSchema = mongoose.Schema({
-    wordOne: String,
-    wordTwo: String,
+    wordOne: Object,
+    wordTwo: Object,
     userID: String,
     projectId: String,
     dateViewed: Date,
     ideasCreatedFrom: [],
-    numberOfIdeas: Int32,
+    numberOfIdeas: Number,
 
 
 

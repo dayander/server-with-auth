@@ -7,6 +7,10 @@ const requireAuth = passport.authenticate('jwt', {session: false});
 const requireSignin = passport.authenticate('local', {session: false});
 const ideas = require('./handlers/ideas');
 const words = require('./handlers/wordHandler');
+const biword = require('./handlers/biWordHandler');
+
+const ML = require('./tensorflow/example');
+const WordNet = require('./handlers/wordNetHandler');
 
 
 
@@ -39,7 +43,17 @@ module.exports = function (app) {
 
 
   app.post('/words/:userID', words.postWord);
-    app.get('/words', words.getWords)
+    app.get('/words', words.getWords);
+
+
+    app.get('/biwords', biword.getBiWord);
+    app.get('/biword50', biword.getRandom50BiWords);
+
+    app.get('/ml', ML.ML);
+
+
+    app.get('/wordnet', WordNet.wordNetTest);
+    app.get('/biwordexists', words.biWordExists);
 
 
 
